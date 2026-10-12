@@ -6,13 +6,6 @@ public class BlogpostService : IBlogpostService
 {
     private static readonly List<BlogpostResponseDto> _blogposts = new()
     {
-        new BlogpostResponseDto
-        {
-            Id = 1,
-            Title = "Mijn eerste blogpost",
-            Description = "Welkom op mijn portfolio backend!",
-            Date = DateTime.Now
-        }
     };
 
     public List<BlogpostResponseDto> GetAll() => _blogposts;
