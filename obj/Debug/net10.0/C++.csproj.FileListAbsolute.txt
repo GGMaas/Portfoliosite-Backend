@@ -34,3 +34,4 @@ C:\Users\maasv\OneDrive\Documenten\GitHub\C++\obj\Debug\net10.0\refint\C++.dll
 C:\Users\maasv\OneDrive\Documenten\GitHub\C++\obj\Debug\net10.0\C++.pdb
 C:\Users\maasv\OneDrive\Documenten\GitHub\C++\obj\Debug\net10.0\C++.genruntimeconfig.cache
 C:\Users\maasv\OneDrive\Documenten\GitHub\C++\obj\Debug\net10.0\ref\C++.dll
+C:\Users\maasv\OneDrive\Documenten\GitHub\C++\obj\Debug\net10.0\C++.sourcelink.json
