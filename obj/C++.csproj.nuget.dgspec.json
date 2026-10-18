@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\C++\\C++.csproj": {}
+    "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\Portfoliosite-Backend\\C++.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\C++\\C++.csproj": {
+    "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\Portfoliosite-Backend\\C++.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\C++\\C++.csproj",
+        "projectUniqueName": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\Portfoliosite-Backend\\C++.csproj",
         "projectName": "C++",
-        "projectPath": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\C++\\C++.csproj",
+        "projectPath": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\Portfoliosite-Backend\\C++.csproj",
         "packagesPath": "C:\\Users\\maasv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\C++\\obj\\",
+        "outputPath": "C:\\Users\\maasv\\OneDrive\\Documenten\\GitHub\\Portfoliosite-Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\maasv\\AppData\\Roaming\\NuGet\\NuGet.Config"
