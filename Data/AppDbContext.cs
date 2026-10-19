@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace C__.Data;
+namespace Portfoliosite_Backend.Data;
 
 public class AppDbContext : DbContext
 {

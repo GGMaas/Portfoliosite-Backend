@@ -1,4 +1,4 @@
-namespace C__.Data;
+namespace Portfoliosite_Backend.Data;
 
 public class Blogpost
 {

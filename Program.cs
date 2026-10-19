@@ -1,5 +1,5 @@
-using C__.Data;
-using C__.Services;
+using Portfoliosite_Backend.Data;
+using Portfoliosite_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

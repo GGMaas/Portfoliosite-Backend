@@ -1,4 +1,4 @@
-namespace C__.DTOs;
+namespace Portfoliosite_Backend.DTOs;
 
 public class ProjectResponseDto
 {

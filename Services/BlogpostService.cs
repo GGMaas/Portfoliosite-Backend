@@ -1,6 +1,6 @@
-using C__.DTOs;
+using Portfoliosite_Backend.DTOs;
 
-namespace C__.Services;
+namespace Portfoliosite_Backend.Services;
 
 public class BlogpostService : IBlogpostService
 {

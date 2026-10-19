@@ -1,7 +1,7 @@
-using C__.Data;
-using C__.DTOs;
+using Portfoliosite_Backend.Data;
+using Portfoliosite_Backend.DTOs;
 
-namespace C__.Services;
+namespace Portfoliosite_Backend.Services;
 
 public class ProjectService : IProjectService
 {

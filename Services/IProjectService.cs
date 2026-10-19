@@ -1,5 +1,5 @@
-using C__.DTOs;
-namespace C__.Services;
+using Portfoliosite_Backend.DTOs;
+namespace Portfoliosite_Backend.Services;
 
 public interface IProjectService
 {

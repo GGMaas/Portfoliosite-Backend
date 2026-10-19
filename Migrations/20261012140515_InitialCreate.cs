@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace C__.Migrations
+namespace Portfoliosite_Backend.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

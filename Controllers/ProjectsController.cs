@@ -1,8 +1,8 @@
-using C__.DTOs;
-using C__.Services;
+using Portfoliosite_Backend.DTOs;
+using Portfoliosite_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace C__.Controllers;
+namespace Portfoliosite_Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

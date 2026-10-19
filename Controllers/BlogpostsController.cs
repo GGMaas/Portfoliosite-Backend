@@ -1,8 +1,9 @@
-using C__.DTOs;
-using C__.Services;
+using Portfoliosite_Backend.DTOs;
+using Portfoliosite_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace C__.Controllers;
+namespace Portfoliosite_Backend.Controllers;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -18,36 +19,49 @@ public class BlogpostsController : ControllerBase
     [HttpGet]
     public ActionResult<List<BlogpostResponseDto>> GetAll()
     {
-        return Ok(_blogpostService.GetAll());
+        List<BlogpostResponseDto> blogposts = _blogpostService.GetAll();
+        return Ok(blogposts);
     }
+
 
     [HttpGet("{id}")]
     public ActionResult<BlogpostResponseDto> GetById(int id)
     {
-        var blogpost = _blogpostService.GetById(id);
-        if (blogpost == null) return NotFound();
+        BlogpostResponseDto? blogpost = _blogpostService.GetById(id);
+        if (blogpost == null)
+        {
+            return NotFound();
+        }
+
         return Ok(blogpost);
     }
 
     [HttpPost]
     public ActionResult<BlogpostResponseDto> Create(CreateBlogpostDto dto)
     {
-        var created = _blogpostService.Create(dto);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        BlogpostResponseDto created = _blogpostService.Create(dto);
+        return CreatedAtAction(
+            actionName: nameof(GetById),
+            routeValues: new { id = created.Id },
+            value: created
+        );
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, CreateBlogpostDto dto)
     {
-        var success = _blogpostService.Update(id, dto);
-        if (!success) return NotFound();
+        bool succes = _blogpostService.Update(id, dto);
+        if (succes == false)
+        {
+            return NotFound();
+        }
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var success = _blogpostService.Delete(id);
+        bool success = _blogpostService.Delete(id);
         if (!success) return NotFound();
         return NoContent();
     }

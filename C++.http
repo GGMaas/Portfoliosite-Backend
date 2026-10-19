@@ -1,6 +1,6 @@
-@C___HostAddress = http://localhost:5086
+@Portfoliosite_BackendHostAddress = http://localhost:5086
 
-GET {{C___HostAddress}}/weatherforecast/
+GET {{Portfoliosite_BackendHostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
