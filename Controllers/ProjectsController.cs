@@ -8,9 +8,9 @@ namespace Portfoliosite_Backend.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
 {
-    private readonly IProjectService _projectService;
+    private readonly ICrudService<ProjectResponseDto, CreateProjectDto> _projectService;
 
-    public ProjectsController(IProjectService projectService)
+    public ProjectsController(ICrudService<ProjectResponseDto, CreateProjectDto> projectService)
     {
         _projectService = projectService;
     }

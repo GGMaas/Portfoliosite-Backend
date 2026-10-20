@@ -1,6 +1,7 @@
 using Portfoliosite_Backend.Data;
 using Portfoliosite_Backend.Services;
 using Microsoft.EntityFrameworkCore;
+using Portfoliosite_Backend.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IBlogpostService, BlogpostService>();
+builder.Services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
+builder.Services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
 
 var app = builder.Build();
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio API v1");
         c.RoutePrefix = string.Empty;
+        
+        c.EnableTryItOutByDefault();
     });
 }
 

@@ -3,9 +3,8 @@ using Portfoliosite_Backend.DTOs;
 
 namespace Portfoliosite_Backend.Services;
 
-public class ProjectService : IProjectService
+public class ProjectService : ICrudService<ProjectResponseDto, CreateProjectDto>
 {
-
     private readonly AppDbContext _context;
 
     public ProjectService(AppDbContext context)
@@ -13,7 +12,7 @@ public class ProjectService : IProjectService
         _context = context;
     }
 
-    public List<ProjectResponseDto> GetAll()
+    public IEnumerable<ProjectResponseDto> GetAll()
     {
         return _context.Projects
             .Select(p => new ProjectResponseDto

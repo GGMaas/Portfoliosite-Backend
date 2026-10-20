@@ -9,9 +9,9 @@ namespace Portfoliosite_Backend.Controllers;
 [Route("api/[controller]")]
 public class BlogpostsController : ControllerBase
 {
-    private readonly IBlogpostService _blogpostService;
+    private readonly ICrudService<BlogpostResponseDto, CreateBlogpostDto> _blogpostService;
 
-    public BlogpostsController(IBlogpostService blogpostService)
+    public BlogpostsController(ICrudService<BlogpostResponseDto, CreateBlogpostDto> blogpostService)
     {
         _blogpostService = blogpostService;
     }
@@ -19,7 +19,7 @@ public class BlogpostsController : ControllerBase
     [HttpGet]
     public ActionResult<List<BlogpostResponseDto>> GetAll()
     {
-        List<BlogpostResponseDto> blogposts = _blogpostService.GetAll();
+        IEnumerable<BlogpostResponseDto> blogposts = _blogpostService.GetAll();
         return Ok(blogposts);
     }
 
