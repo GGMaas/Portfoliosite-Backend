@@ -2,6 +2,8 @@ using Portfoliosite_Backend.Data;
 using Portfoliosite_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Portfoliosite_Backend.DTOs;
+using Portfoliosite_Backend.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 // This is the main startup file for the ASP.NET Core API.
 // It configures the app, registers services, and starts the web server.
@@ -44,6 +46,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
 builder.Services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
 
+
+// Add Authentication and Authorization to User with Framwork
+builder.Services.AddIdentityApiEndpoints<User>()
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>();
+
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+.AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
+
+
+
 // Build the application after all services are configured.
 var app = builder.Build();
 
@@ -66,7 +82,9 @@ app.UseHttpsRedirection();
 
 // This app does not currently use authentication, but this middleware is usually
 // used when authorization rules are configured.
+app.UseAuthentication();
 app.UseAuthorization();
+app.MapIdentityApi<User>();
 
 // Use the configured CORS policy before mapping controllers.
 app.UseCors("AllowFrontend");

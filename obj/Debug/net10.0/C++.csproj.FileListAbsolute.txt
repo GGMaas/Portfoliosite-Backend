@@ -336,3 +336,4 @@ C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.0\C++.pdb
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.0\C++.genruntimeconfig.cache
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.0\ref\C++.dll
+C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

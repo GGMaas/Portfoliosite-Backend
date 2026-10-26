@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v10.0": {
       "C++/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.14",
           "Microsoft.AspNetCore.OpenApi": "10.0.12",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.12",
           "Microsoft.EntityFrameworkCore.Tools": "10.0.12",
@@ -48,6 +49,17 @@
           "lib/net6.0/Humanizer.dll": {
             "assemblyVersion": "2.14.0.0",
             "fileVersion": "2.14.1.48190"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.14": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.14"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "assemblyVersion": "10.0.14.0",
+            "fileVersion": "10.0.1426.52326"
           }
         }
       },
@@ -444,22 +456,22 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore/10.0.12": {
+      "Microsoft.EntityFrameworkCore/10.0.14": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.12"
+          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.14"
         },
         "runtime": {
           "lib/net10.0/Microsoft.EntityFrameworkCore.dll": {
-            "assemblyVersion": "10.0.12.0",
-            "fileVersion": "10.0.1226.42308"
+            "assemblyVersion": "10.0.14.0",
+            "fileVersion": "10.0.1426.52326"
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/10.0.12": {
+      "Microsoft.EntityFrameworkCore.Abstractions/10.0.14": {
         "runtime": {
           "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "assemblyVersion": "10.0.12.0",
-            "fileVersion": "10.0.1226.42308"
+            "assemblyVersion": "10.0.14.0",
+            "fileVersion": "10.0.1426.52326"
           }
         }
       },
@@ -470,7 +482,7 @@
           "Microsoft.CodeAnalysis.CSharp": "5.0.0",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "5.0.0",
           "Microsoft.CodeAnalysis.Workspaces.MSBuild": "5.0.0",
-          "Microsoft.EntityFrameworkCore.Relational": "10.0.12",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.14",
           "Microsoft.Extensions.DependencyModel": "10.0.12",
           "Mono.TextTemplating": "3.0.0",
           "Newtonsoft.Json": "13.0.4"
@@ -482,21 +494,21 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Relational/10.0.12": {
+      "Microsoft.EntityFrameworkCore.Relational/10.0.14": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "10.0.12"
+          "Microsoft.EntityFrameworkCore": "10.0.14"
         },
         "runtime": {
           "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "assemblyVersion": "10.0.12.0",
-            "fileVersion": "10.0.1226.42308"
+            "assemblyVersion": "10.0.14.0",
+            "fileVersion": "10.0.1426.52326"
           }
         }
       },
       "Microsoft.EntityFrameworkCore.SqlServer/10.0.12": {
         "dependencies": {
           "Microsoft.Data.SqlClient": "6.1.6",
-          "Microsoft.EntityFrameworkCore.Relational": "10.0.12"
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.14"
         },
         "runtime": {
           "lib/net10.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {
@@ -884,6 +896,13 @@
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GPU3K0HaLlYu0dnocEglRhrnYRu6VTJocynD5TF8I2lvcMsNzhv46WJLxh/USxu6hgmOrNZH/VhGl4ckdiPHpg==",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/10.0.14",
+      "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.10.0.14.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.OpenApi/10.0.12": {
       "type": "package",
       "serviceable": true,
@@ -954,19 +973,19 @@
       "path": "microsoft.data.sqlclient.sni.runtime/6.0.2",
       "hashPath": "microsoft.data.sqlclient.sni.runtime.6.0.2.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore/10.0.12": {
+    "Microsoft.EntityFrameworkCore/10.0.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-e7OrVN8U5yr4kuwdTHWBHGVQIVsGfMkAr0Ej1/BnrS989Q0XBVANpIzNZ2bc1GvMZ0/XwMt5InTnmKskxGy99Q==",
-      "path": "microsoft.entityframeworkcore/10.0.12",
-      "hashPath": "microsoft.entityframeworkcore.10.0.12.nupkg.sha512"
+      "sha512": "sha512-vY3931PYPIDBbKovGHbACmpOWvURvKNyRXfCjMh5yLW+FH6vLWeqUu2xzSCRo4Oz4tgx9GYpd0JlV5LDyAoQdg==",
+      "path": "microsoft.entityframeworkcore/10.0.14",
+      "hashPath": "microsoft.entityframeworkcore.10.0.14.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/10.0.12": {
+    "Microsoft.EntityFrameworkCore.Abstractions/10.0.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kDrux7T6C3V/YYYe2LXr7x6AEsVyq5Y2YoTE9er1SwbDtap3z1g8RgxNh5eKQVyB4T+DKvBBJ4Ezd/VZzJQJZg==",
-      "path": "microsoft.entityframeworkcore.abstractions/10.0.12",
-      "hashPath": "microsoft.entityframeworkcore.abstractions.10.0.12.nupkg.sha512"
+      "sha512": "sha512-/SaznoTTFfKzxYEbCPAwwKBR3XT92DZgH4jJ3/cqs2skP3o2D+TL6i9Aaj+8Azwtu6/sRd0ve4P2mN12nfVmCw==",
+      "path": "microsoft.entityframeworkcore.abstractions/10.0.14",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.10.0.14.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Design/10.0.12": {
       "type": "package",
@@ -975,12 +994,12 @@
       "path": "microsoft.entityframeworkcore.design/10.0.12",
       "hashPath": "microsoft.entityframeworkcore.design.10.0.12.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Relational/10.0.12": {
+    "Microsoft.EntityFrameworkCore.Relational/10.0.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OiHmr8XzX96dbgMsYGe8qoqg4KxibdZG2r0QUVJBGktFInOp8IrABe8jvcbo5hrqeWfbwpK7fCEBiEPbY/ik4A==",
-      "path": "microsoft.entityframeworkcore.relational/10.0.12",
-      "hashPath": "microsoft.entityframeworkcore.relational.10.0.12.nupkg.sha512"
+      "sha512": "sha512-Ut0kgtfoKX9QElQVEXSEAgdQc79jISWStVWSOhfPDDHNSKMwFzSXG3gtdYFTAbsBoV+8NtXdVaj4xwdqeky8UA==",
+      "path": "microsoft.entityframeworkcore.relational/10.0.14",
+      "hashPath": "microsoft.entityframeworkcore.relational.10.0.14.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.SqlServer/10.0.12": {
       "type": "package",
