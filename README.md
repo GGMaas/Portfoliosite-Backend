@@ -5,7 +5,7 @@ Dit repository bevat de backend API voor de persoonlijke portfolio-website, ontw
 typ in terminal "dotnet run" om lokaal app te runnen
 
 ## 📌 Algemene Gegevens
-* **Student:** GGMaas
+* **Student:** Guido van der Maas
 * **Repository:** [Portfoliosite-Backend](https://github.com/GGMaas/Portfoliosite-Backend)
 * **Kader:** WPFW Opdracht 3 - De Haagse Hogeschool
 
