@@ -2,6 +2,8 @@
 
 Dit repository bevat de backend API voor de persoonlijke portfolio-website, ontwikkeld in het kader van de cursus Web Programming Frameworks (WPFW). 
 
+typ in terminal "dotnet run" om lokaal app te runnen
+
 ## 📌 Algemene Gegevens
 * **Student:** GGMaas
 * **Repository:** [Portfoliosite-Backend](https://github.com/GGMaas/Portfoliosite-Backend)
