@@ -1,10 +1,11 @@
 using Portfoliosite_Backend.DTOs;
 using Portfoliosite_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Portfoliosite_Backend.Controllers;
 
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class BlogpostsController : ControllerBase

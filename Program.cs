@@ -92,5 +92,6 @@ app.UseCors("AllowFrontend");
 // Map controller routes such as /Blogposts and /Projects.
 app.MapControllers();
 
+
 // Start the API and keep it running.
 app.Run();
