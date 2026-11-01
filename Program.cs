@@ -1,9 +1,9 @@
-using Portfoliosite_Backend.Entities.Database_entities;
+using Portfoliosite_Backend.Data.Database_entities;
 using Portfoliosite_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Portfoliosite_Backend.DTOs;
-using Portfoliosite_Backend.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using Portfoliosite_Backend.Entities.Identity;
 
 // This file starts the API.
 // It sets up the database, routes, and security.
@@ -52,8 +52,12 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthorizationBuilder()
 .AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
 
+builder.Services.AddProblemDetails();
+
 // Build the app after everything is configured.
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 // In development, show the API docs in the browser.
 if (app.Environment.IsDevelopment())

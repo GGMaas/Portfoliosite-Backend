@@ -1,5 +1,5 @@
 using Portfoliosite_Backend.DTOs;
-using Portfoliosite_Backend.Entities.Database_entities;
+using Portfoliosite_Backend.Data.Database_entities;
 
 namespace Portfoliosite_Backend.Services;
 

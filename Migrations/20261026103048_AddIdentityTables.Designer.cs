@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfoliosite_Backend.Data;
+using Portfoliosite_Backend.Data.Database_entities;
 
 #nullable disable
 
