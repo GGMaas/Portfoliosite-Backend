@@ -1,4 +1,4 @@
-namespace Portfoliosite_Backend.Data;
+namespace Portfoliosite_Backend.Data.Database_entities;
 
 public class Blogpost
 {

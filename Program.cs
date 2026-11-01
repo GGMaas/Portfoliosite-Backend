@@ -1,28 +1,27 @@
-using Portfoliosite_Backend.Data;
+using Portfoliosite_Backend.Entities.Database_entities;
 using Portfoliosite_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Portfoliosite_Backend.DTOs;
 using Portfoliosite_Backend.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
-// This is the main startup file for the ASP.NET Core API.
-// It configures the app, registers services, and starts the web server.
+// This file starts the API.
+// It sets up the database, routes, and security.
 
-// Create the application builder.
-// This is where we add services, configuration, and middleware for the API.
+// Create the app builder.
+// This is the place where we add services and setup the app.
 var builder = WebApplication.CreateBuilder(args);
 
-// Connect the app to SQL Server using the connection string named "DefaultConnection"
-// from appsettings.json or appsettings.Development.json.
-// AppDbContext is the Entity Framework Core database context for the project.
+// Connect the app to the SQL database.
+// The connection string is in appsettings.json.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Allow requests from the frontend application.
-// This is important when the frontend runs on a different URL/port than the backend.
+// Allow the frontend to call this API.
+// This is needed when the frontend runs on another port or domain.
 builder.Services.AddCors(options =>
 {
-    // Define a CORS policy called "AllowFrontend".
+    // Create a simple policy called "AllowFrontend".
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.AllowAnyOrigin()
@@ -31,39 +30,32 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Register MVC controllers so the app can receive HTTP requests and route them
-// to the correct controller actions.
+// Add controller support so API routes can work.
 builder.Services.AddControllers();
 
-// Add API explorer support and Swagger generation.
-// Swagger creates a web page that shows the available API endpoints and lets you test them.
+// Add Swagger so we can test endpoints in the browser.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register the CRUD services with dependency injection.
-// This means the controllers can ask for a BlogpostService or ProjectService
-// without creating them manually.
+// Register the services used by the controllers.
+// This lets the app reuse the same service code everywhere.
 builder.Services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
 builder.Services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
 
-
-// Add Authentication and Authorization to User with Framwork
+// Add login and user/role support.
 builder.Services.AddIdentityApiEndpoints<User>()
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
-
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthorizationBuilder()
 .AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
 
-
-
-// Build the application after all services are configured.
+// Build the app after everything is configured.
 var app = builder.Build();
 
-// In development mode, enable Swagger UI so developers can test the API in the browser.
+// In development, show the API docs in the browser.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -72,26 +64,24 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio API v1");
         c.RoutePrefix = string.Empty;
 
-        // Show the "Try it out" feature by default in Swagger UI.
+        // Show the test feature in Swagger.
         c.EnableTryItOutByDefault();
     });
 }
 
-// Redirect HTTP requests to HTTPS for safer connections.
+// Force HTTPS for safer requests.
 app.UseHttpsRedirection();
 
-// This app does not currently use authentication, but this middleware is usually
-// used when authorization rules are configured.
+// Use authentication and authorization rules.
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapIdentityApi<User>();
 
-// Use the configured CORS policy before mapping controllers.
+// Use CORS before handling requests.
 app.UseCors("AllowFrontend");
 
-// Map controller routes such as /Blogposts and /Projects.
+// Map all controller routes.
 app.MapControllers();
 
-
-// Start the API and keep it running.
+// Start the app and keep it running.
 app.Run();

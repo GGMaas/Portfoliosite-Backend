@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Portfoliosite_Backend.Entities.Identity;
 
-namespace Portfoliosite_Backend.Data;
+namespace Portfoliosite_Backend.Data.Database_entities;
 
 public class AppDbContext : IdentityDbContext<User>
 {

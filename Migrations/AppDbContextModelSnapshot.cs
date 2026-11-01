@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Portfoliosite_Backend.Data;
+using Portfoliosite_Backend.Data.Database_entities;
+
 
 #nullable disable
 
@@ -155,7 +156,7 @@ namespace Portfoliosite_Backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Portfoliosite_Backend.Data.Blogpost", b =>
+            modelBuilder.Entity("Portfoliosite_Backend.Entities.Database_entities.Blogpost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,7 +180,7 @@ namespace Portfoliosite_Backend.Migrations
                     b.ToTable("Blogposts");
                 });
 
-            modelBuilder.Entity("Portfoliosite_Backend.Data.Project", b =>
+            modelBuilder.Entity("Portfoliosite_Backend.Entities.Database_entities.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
