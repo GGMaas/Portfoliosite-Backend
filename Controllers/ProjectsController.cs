@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Portfoliosite_Backend.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
@@ -17,12 +16,14 @@ public class ProjectsController : ControllerBase
         _projectService = projectService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public ActionResult<List<ProjectResponseDto>> GetAll()
     {
         return Ok(_projectService.GetAll());
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public ActionResult<ProjectResponseDto> GetById(int id)
     {
@@ -31,6 +32,7 @@ public class ProjectsController : ControllerBase
         return Ok(project);
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpPost]
     public ActionResult<ProjectResponseDto> Create(CreateProjectDto dto)
     {
@@ -38,6 +40,7 @@ public class ProjectsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpPut("{id}")]
     public IActionResult Update(int id, CreateProjectDto dto)
     {
@@ -46,6 +49,7 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

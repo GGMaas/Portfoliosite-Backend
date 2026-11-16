@@ -1,4 +1,5 @@
 @Portfoliosite_BackendHostAddress = http://localhost:5086
+@testPassword = {{$dotenv PORTFOLIO_TEST_PASSWORD}}
 
 ### Register a user account
 POST {{Portfoliosite_BackendHostAddress}}/api/auth/register
@@ -6,6 +7,22 @@ Content-Type: application/json
 
 {
   "email": "new.user@example.com",
-  "password": "Example-Password1!",
+  "password": "{{testPassword}}",
   "name": "New User"
 }
+
+###
+
+### Log in and receive an authentication cookie
+POST {{Portfoliosite_BackendHostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "new.user@example.com",
+  "password": "{{testPassword}}"
+}
+
+###
+
+### Log out and clear the authentication cookie
+POST {{Portfoliosite_BackendHostAddress}}/api/auth/logout

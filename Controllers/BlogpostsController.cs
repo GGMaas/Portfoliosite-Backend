@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Portfoliosite_Backend.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class BlogpostsController : ControllerBase
@@ -17,6 +16,7 @@ public class BlogpostsController : ControllerBase
         _blogpostService = blogpostService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public ActionResult<List<BlogpostResponseDto>> GetAll()
     {
@@ -25,6 +25,7 @@ public class BlogpostsController : ControllerBase
     }
 
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public ActionResult<BlogpostResponseDto> GetById(int id)
     {
@@ -37,6 +38,7 @@ public class BlogpostsController : ControllerBase
         return Ok(blogpost);
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpPost]
     public ActionResult<BlogpostResponseDto> Create(CreateBlogpostDto dto)
     {
@@ -48,6 +50,7 @@ public class BlogpostsController : ControllerBase
         );
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpPut("{id}")]
     public IActionResult Update(int id, CreateBlogpostDto dto)
     {
@@ -59,6 +62,7 @@ public class BlogpostsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Policy = "CanEditContent")]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

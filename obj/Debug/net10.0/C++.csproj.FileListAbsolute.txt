@@ -351,3 +351,10 @@ C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C+
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.runtimeconfig.json
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.dll
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.pdb
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\appsettings.Development.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\appsettings.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.staticwebassets.endpoints.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.deps.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.runtimeconfig.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.dll
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.pdb

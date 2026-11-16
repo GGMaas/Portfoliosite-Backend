@@ -9,13 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 AddServices(builder);
 var app = builder.Build();
 ConfigureRequestPipeline(app);
+await EnsureRolesExistAsync(app.Services);
 app.Run();
 
 // Register the services the API needs before the app starts.
 static void AddServices(WebApplicationBuilder builder)
 {
     AddDatabase(builder);
-    AddCors(builder.Services);
+    AddCors(builder);
     AddControllersAndSwagger(builder.Services);
     AddApplicationServices(builder.Services);
     AddIdentityAndAuthorization(builder.Services);
@@ -31,15 +32,25 @@ static void AddDatabase(WebApplicationBuilder builder)
 }
 
 // Allow the frontend to send requests to this API.
-static void AddCors(IServiceCollection services)
+static void AddCors(WebApplicationBuilder builder)
 {
-    services.AddCors(options =>
+    var allowedOrigins = builder.Configuration
+        .GetSection("Cors:AllowedOrigins")
+        .Get<string[]>() ?? Array.Empty<string>();
+
+    builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowFrontend", policy =>
         {
-            policy.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.AllowAnyHeader().AllowAnyMethod();
+
+            if (allowedOrigins.Length == 0)
+            {
+                policy.AllowAnyOrigin();
+                return;
+            }
+
+            policy.WithOrigins(allowedOrigins).AllowCredentials();
         });
     });
 }
@@ -63,13 +74,35 @@ static void AddApplicationServices(IServiceCollection services)
 // Enable user accounts, roles, authentication, and authorization policies.
 static void AddIdentityAndAuthorization(IServiceCollection services)
 {
-    services.AddIdentityApiEndpoints<User>()
-        .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<AppDbContext>();
+    services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
 
-    services.AddAuthentication();
-    services.AddAuthorization();
-    services.AddAuthorizationBuilder().AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
+    services.ConfigureApplicationCookie(options =>
+    {
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            return Task.CompletedTask;
+        };
+    });
+
+    services.Configure<SecurityStampValidatorOptions>(options =>
+    {
+        // Check for manual role changes on every request and invalidate stale cookies immediately.
+        options.ValidationInterval = TimeSpan.Zero;
+    });
+
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("CanEditContent", policy =>
+            policy.RequireRole(UserRoles.Editor, UserRoles.Admin));
+    });
 }
 
 // Return clear error responses when a request fails.
@@ -85,9 +118,9 @@ static void ConfigureRequestPipeline(WebApplication app)
     UseSwaggerInDevelopment(app);
 
     app.UseHttpsRedirection();
+    app.UseCors("AllowFrontend");
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseCors("AllowFrontend");
     app.MapControllers();
 }
 
@@ -106,4 +139,26 @@ static void UseSwaggerInDevelopment(WebApplication app)
         options.RoutePrefix = string.Empty;
         options.EnableTryItOutByDefault();
     });
+}
+
+// Create the roles used by registration and authorization if they do not exist yet.
+static async Task EnsureRolesExistAsync(IServiceProvider services)
+{
+    await using var scope = services.CreateAsyncScope();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    foreach (var roleName in new[] { UserRoles.Gast, UserRoles.Editor, UserRoles.Admin })
+    {
+        if (await roleManager.RoleExistsAsync(roleName))
+        {
+            continue;
+        }
+
+        var result = await roleManager.CreateAsync(new IdentityRole(roleName));
+        if (!result.Succeeded)
+        {
+            var errors = string.Join("; ", result.Errors.Select(error => error.Description));
+            throw new InvalidOperationException($"Could not create the '{roleName}' role: {errors}");
+        }
+    }
 }

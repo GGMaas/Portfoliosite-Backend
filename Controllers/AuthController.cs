@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Portfoliosite_Backend.DTOs;
+using Portfoliosite_Backend.Entities.Identity;
 using Portfoliosite_Backend.Services;
 
 namespace Portfoliosite_Backend.Controllers;
@@ -10,10 +12,14 @@ namespace Portfoliosite_Backend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserRegistrationService _userRegistrationService;
+    private readonly SignInManager<User> _signInManager;
 
-    public AuthController(IUserRegistrationService userRegistrationService)
+    public AuthController(
+        IUserRegistrationService userRegistrationService,
+        SignInManager<User> signInManager)
     {
         _userRegistrationService = userRegistrationService;
+        _signInManager = signInManager;
     }
 
     [AllowAnonymous]
@@ -30,11 +36,48 @@ public class AuthController : ControllerBase
         {
             return BadRequest(new ValidationProblemDetails(result.Errors));
         }
-        else
-            return StatusCode(StatusCodes.Status201Created, new
+
+        return StatusCode(StatusCodes.Status201Created, new
+        {
+            result.Id,
+            result.Email
+        });
+    }
+
+    [AllowAnonymous]
+    [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Login(
+        LoginUserDto request,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await _signInManager.PasswordSignInAsync(
+            request.Email,
+            request.Password,
+            isPersistent: false,
+            lockoutOnFailure: false);
+
+        if (!result.Succeeded)
+        {
+            return Unauthorized(new ProblemDetails
             {
-                result.Id,
-                result.Email
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Invalid email or password."
             });
+        }
+
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return NoContent();
     }
 }
