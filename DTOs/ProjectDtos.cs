@@ -1,6 +1,6 @@
 namespace Portfoliosite_Backend.DTOs;
 
-public class ProjectResponseDto
+public sealed record ProjectResponseDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -10,7 +10,7 @@ public class ProjectResponseDto
     public int year { get; set; }
 }
 
-public class CreateProjectDto
+public sealed record CreateProjectDto
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

@@ -6,13 +6,9 @@ using Portfoliosite_Backend.Entities.Identity;
 using Portfoliosite_Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 AddServices(builder);
-
 var app = builder.Build();
-
 ConfigureRequestPipeline(app);
-
 app.Run();
 
 // Register the services the API needs before the app starts.
@@ -61,6 +57,7 @@ static void AddApplicationServices(IServiceCollection services)
 {
     services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
     services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
+    services.AddScoped<IUserRegistrationService, UserRegistrationService>();
 }
 
 // Enable user accounts, roles, authentication, and authorization policies.
@@ -72,9 +69,7 @@ static void AddIdentityAndAuthorization(IServiceCollection services)
 
     services.AddAuthentication();
     services.AddAuthorization();
-    services.AddAuthorizationBuilder()
-        .AddPolicy("CanEditProjects", policy =>
-            policy.RequireRole("Editor", "Admin"));
+    services.AddAuthorizationBuilder().AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
 }
 
 // Return clear error responses when a request fails.
@@ -92,7 +87,6 @@ static void ConfigureRequestPipeline(WebApplication app)
     app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
-    app.MapIdentityApi<User>();
     app.UseCors("AllowFrontend");
     app.MapControllers();
 }

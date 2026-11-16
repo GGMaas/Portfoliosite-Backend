@@ -337,3 +337,17 @@ C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.0\C++.genruntimeconfig.cache
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\obj\Debug\net10.0\ref\C++.dll
 C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\appsettings.Development.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\appsettings.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\C++.staticwebassets.endpoints.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\C++.deps.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\C++.runtimeconfig.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\C++.dll
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-build-check-20261116\C++.pdb
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\appsettings.Development.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\appsettings.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.staticwebassets.endpoints.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.deps.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.runtimeconfig.json
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.dll
+C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-thin-controller-check\C++.pdb

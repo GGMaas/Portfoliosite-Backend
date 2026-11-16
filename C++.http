@@ -1,6 +1,11 @@
 @Portfoliosite_BackendHostAddress = http://localhost:5086
 
-GET {{Portfoliosite_BackendHostAddress}}/weatherforecast/
-Accept: application/json
+### Register a user account
+POST {{Portfoliosite_BackendHostAddress}}/api/auth/register
+Content-Type: application/json
 
-###
+{
+  "email": "new.user@example.com",
+  "password": "Example-Password1!",
+  "name": "New User"
+}

@@ -1,6 +1,6 @@
 namespace Portfoliosite_Backend.DTOs;
 
-public class BlogpostResponseDto
+public sealed record BlogpostResponseDto
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
@@ -8,7 +8,7 @@ public class BlogpostResponseDto
     public DateTime Date { get; set; }
 }
 
-public class CreateBlogpostDto
+public sealed record CreateBlogpostDto
 {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
