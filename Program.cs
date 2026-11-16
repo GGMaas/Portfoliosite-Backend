@@ -1,91 +1,115 @@
-using Portfoliosite_Backend.Data.Database_entities;
-using Portfoliosite_Backend.Services;
-using Microsoft.EntityFrameworkCore;
-using Portfoliosite_Backend.DTOs;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Portfoliosite_Backend.Data.Database_entities;
+using Portfoliosite_Backend.DTOs;
 using Portfoliosite_Backend.Entities.Identity;
+using Portfoliosite_Backend.Services;
 
-// This file starts the API.
-// It sets up the database, routes, and security.
-
-// Create the app builder.
-// This is the place where we add services and setup the app.
 var builder = WebApplication.CreateBuilder(args);
 
-// Connect the app to the SQL database.
-// The connection string is in appsettings.json.
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+AddServices(builder);
 
-// Allow the frontend to call this API.
-// This is needed when the frontend runs on another port or domain.
-builder.Services.AddCors(options =>
-{
-    // Create a simple policy called "AllowFrontend".
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
-
-// Add controller support so API routes can work.
-builder.Services.AddControllers();
-
-// Add Swagger so we can test endpoints in the browser.
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Register the services used by the controllers.
-// This lets the app reuse the same service code everywhere.
-builder.Services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
-builder.Services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
-
-// Add login and user/role support.
-builder.Services.AddIdentityApiEndpoints<User>()
-.AddRoles<IdentityRole>()
-.AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-builder.Services.AddAuthorizationBuilder()
-.AddPolicy("CanEditProjects", policy => policy.RequireRole("Editor", "Admin"));
-
-builder.Services.AddProblemDetails();
-
-// Build the app after everything is configured.
 var app = builder.Build();
 
-app.UseExceptionHandler();
+ConfigureRequestPipeline(app);
 
-// In development, show the API docs in the browser.
-if (app.Environment.IsDevelopment())
+app.Run();
+
+// Register the services the API needs before the app starts.
+static void AddServices(WebApplicationBuilder builder)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio API v1");
-        c.RoutePrefix = string.Empty;
+    AddDatabase(builder);
+    AddCors(builder.Services);
+    AddControllersAndSwagger(builder.Services);
+    AddApplicationServices(builder.Services);
+    AddIdentityAndAuthorization(builder.Services);
+    AddErrorHandling(builder.Services);
+}
 
-        // Show the test feature in Swagger.
-        c.EnableTryItOutByDefault();
+// Connect the application to the SQL Server database.
+static void AddDatabase(WebApplicationBuilder builder)
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+
+// Allow the frontend to send requests to this API.
+static void AddCors(IServiceCollection services)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowFrontend", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
     });
 }
 
-// Force HTTPS for safer requests.
-app.UseHttpsRedirection();
+// Enable controller routes and the Swagger API documentation.
+static void AddControllersAndSwagger(IServiceCollection services)
+{
+    services.AddControllers();
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen();
+}
 
-// Use authentication and authorization rules.
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapIdentityApi<User>();
+// Make the application services available to controllers.
+static void AddApplicationServices(IServiceCollection services)
+{
+    services.AddScoped<ICrudService<BlogpostResponseDto, CreateBlogpostDto>, BlogpostService>();
+    services.AddScoped<ICrudService<ProjectResponseDto, CreateProjectDto>, ProjectService>();
+}
 
-// Use CORS before handling requests.
-app.UseCors("AllowFrontend");
+// Enable user accounts, roles, authentication, and authorization policies.
+static void AddIdentityAndAuthorization(IServiceCollection services)
+{
+    services.AddIdentityApiEndpoints<User>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>();
 
-// Map all controller routes.
-app.MapControllers();
+    services.AddAuthentication();
+    services.AddAuthorization();
+    services.AddAuthorizationBuilder()
+        .AddPolicy("CanEditProjects", policy =>
+            policy.RequireRole("Editor", "Admin"));
+}
 
-// Start the app and keep it running.
-app.Run();
+// Return clear error responses when a request fails.
+static void AddErrorHandling(IServiceCollection services)
+{
+    services.AddProblemDetails();
+}
+
+// Add middleware and routes in the order requests should pass through them.
+static void ConfigureRequestPipeline(WebApplication app)
+{
+    app.UseExceptionHandler();
+    UseSwaggerInDevelopment(app);
+
+    app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.MapIdentityApi<User>();
+    app.UseCors("AllowFrontend");
+    app.MapControllers();
+}
+
+// Show Swagger only while the application is running in development.
+static void UseSwaggerInDevelopment(WebApplication app)
+{
+    if (!app.Environment.IsDevelopment())
+    {
+        return;
+    }
+
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio API v1");
+        options.RoutePrefix = string.Empty;
+        options.EnableTryItOutByDefault();
+    });
+}

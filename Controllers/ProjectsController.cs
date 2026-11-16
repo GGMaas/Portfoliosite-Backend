@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Portfoliosite_Backend.Controllers;
 
-[Authorize]
+// [Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
