@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,6 +13,13 @@ namespace PortfolioSite.Tests.Infrastructure;
 
 public sealed class PortfolioApiFactory : WebApplicationFactory<Program>
 {
+    private readonly bool _useTestAuthentication;
+
+    public PortfolioApiFactory(bool useTestAuthentication = true)
+    {
+        _useTestAuthentication = useTestAuthentication;
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         var databaseName = $"PortfolioTests-{Guid.NewGuid():N}";
@@ -22,16 +30,22 @@ public sealed class PortfolioApiFactory : WebApplicationFactory<Program>
             services.RemoveAll<IDbContextOptionsConfiguration<AppDbContext>>();
             services.RemoveAll<AppDbContext>();
             services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase(databaseName));
+                options
+                    .UseInMemoryDatabase(databaseName)
+                    .ConfigureWarnings(warnings =>
+                        warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
 
-            services.AddAuthentication(options =>
+            if (_useTestAuthentication)
             {
-                options.DefaultAuthenticateScheme = TestAuthHandler.SchemeName;
-                options.DefaultChallengeScheme = TestAuthHandler.SchemeName;
-                options.DefaultForbidScheme = TestAuthHandler.SchemeName;
-            }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
-                TestAuthHandler.SchemeName,
-                _ => { });
+                services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = TestAuthHandler.SchemeName;
+                    options.DefaultChallengeScheme = TestAuthHandler.SchemeName;
+                    options.DefaultForbidScheme = TestAuthHandler.SchemeName;
+                }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                    TestAuthHandler.SchemeName,
+                    _ => { });
+            }
         });
     }
 }

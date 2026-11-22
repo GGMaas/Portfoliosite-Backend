@@ -97,7 +97,9 @@ De frontend moet daarnaast cookies meesturen, bijvoorbeeld met `credentials: "in
 
 ## Tests
 
-`PortfolioSite.Tests` bevat HTTP-integratietests voor de CRUD-routes van projecten en blogposts. De tests gebruiken de echte controllers en services, maar een aparte in-memory database en testauthenticatie; de lokale SQL Server-database wordt niet aangepast. Elke test maakt Arrange, Act en Assert herkenbaar.
+`PortfolioSite.Tests` bevat HTTP-integratietests voor de authenticatie- en CRUD-routes. De tests gebruiken de echte controllers en services, maar een aparte in-memory database; de lokale SQL Server-database wordt niet aangepast. De CRUD-tests gebruiken testauthenticatie, terwijl registratie- en logintests de echte Identity-cookieauthenticatie gebruiken. Elke test maakt Arrange, Act en Assert herkenbaar.
+
+De authenticatietests controleren registratie van een account en de standaardrol `Gast`, dat registratie niet automatisch inlogt, ongeldige e-mailadressen en wachtwoorden, dubbele registratie, succesvol inloggen met een cookie, en afwijzing van onjuiste of onbekende inloggegevens. Een volgend beschermd verzoek controleert dat de login-cookie daadwerkelijk wordt herkend.
 
 De tests controleren voor beide resources:
 
@@ -106,7 +108,7 @@ De tests controleren voor beide resources:
 - Wijzigen en verwijderen van bestaande items (`204 No Content`), plus `404 Not Found` wanneer het item ontbreekt.
 - Alle schrijfmethoden geven `401 Unauthorized` zonder authenticatie en `403 Forbidden` voor de rol `Gast`.
 
-Na uitvoering rapporteert Coverlet 100% line- en branch-coverage voor beide CRUD-controllers en beide CRUD-services. De totale coverage van de backend is lager, omdat deze tests niet de authenticatie-, registratie- of opstartcode afdekken; de coverageclaim is dus specifiek voor de CRUD-functionaliteit.
+Na uitvoering rapporteert Coverlet 100% line- en branch-coverage voor de registratie- en loginacties en de CRUD-controllers en CRUD-services. De registratie-service zelf is getest; een zeldzaam foutpad bij het toekennen van de standaardrol blijft ongedekt. De logout-actie en opstartcode vallen ook buiten deze tests. De totale backendcoverage is 25,6% line coverage. Coverage is gemeten met Coverlet; dit percentage betekent niet dat elke mogelijke invoer of productieomgeving is getest.
 
 Voer de tests uit vanuit de backendmap:
 
