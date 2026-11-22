@@ -66,6 +66,7 @@ ASP.NET Core Identity slaat gebruikers en rollen op in SQL Server. Bij het start
 
 - `POST /api/Auth/register` maakt een account aan en kent automatisch de rol `Gast` toe.
 - `POST /api/Auth/login` controleert e-mailadres en wachtwoord. Na een geslaagde login stuurt de API een Identity-authenticatiecookie terug.
+- `GET /api/Auth/me` geeft de ingelogde gebruiker en diens rollen terug.
 - `POST /api/Auth/logout` meldt de gebruiker af en verwijdert de cookie.
 - Projecten en blogposts kunnen zonder inloggen worden opgevraagd.
 - Alleen `Editor` en `Admin` mogen projecten en blogposts aanmaken, wijzigen of verwijderen. De policy `CanEditContent` noemt beide rollen expliciet.
@@ -89,11 +90,13 @@ Als een aparte frontend de cookie moet gebruiken, stel de exacte origin in (verv
 
 ```json
 "Cors": {
-  "AllowedOrigins": ["http://localhost:5173"]
+  "AllowedOrigins": ["http://localhost:5500"]
 }
 ```
 
-De frontend moet daarnaast cookies meesturen, bijvoorbeeld met `credentials: "include"`. Gebruik voor cookie-authenticatie geen wildcard-origin.
+Serveer de frontend via een lokale HTTP-server (niet met een `file://`-URL), bijvoorbeeld met VS Code Live Server op poort 5500. Open de site op `http://localhost:5500` of `http://127.0.0.1:5500`; deze ontwikkelorigins staan in `appsettings.Development.json`. Start de API met `dotnet run --launch-profile https` en vertrouw het lokale .NET-ontwikkelcertificaat als de browser daarom vraagt.
+
+De frontend moet cookies meesturen, bijvoorbeeld met `credentials: "include"`. De API gebruikt hiervoor een beveiligde cross-origin-cookie; gebruik HTTPS in productie en nooit een wildcard-CORS-origin bij cookie-authenticatie.
 
 ## Tests
 

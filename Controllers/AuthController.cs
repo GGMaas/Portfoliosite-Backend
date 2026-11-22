@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,19 @@ public class AuthController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public IActionResult GetCurrentAccount()
+    {
+        return Ok(new
+        {
+            email = User.Identity?.Name,
+            roles = User.FindAll(ClaimTypes.Role).Select(claim => claim.Value).ToArray()
+        });
     }
 
     [Authorize]

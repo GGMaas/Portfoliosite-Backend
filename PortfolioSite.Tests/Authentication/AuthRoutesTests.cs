@@ -22,7 +22,8 @@ public sealed class AuthRoutesTests : IAsyncLifetime
         _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false,
-            HandleCookies = true
+            HandleCookies = true,
+            BaseAddress = new Uri("https://localhost")
         });
         return Task.CompletedTask;
     }
@@ -121,6 +122,8 @@ public sealed class AuthRoutesTests : IAsyncLifetime
         // Act
         var response = await _client.PostAsJsonAsync("/api/Auth/login", login);
         var hasSetCookie = response.Headers.TryGetValues("Set-Cookie", out var setCookieHeaders);
+        var accountResponse = await _client.GetAsync("/api/Auth/me");
+        var account = await accountResponse.Content.ReadFromJsonAsync<JsonElement>();
         var protectedResponse = await _client.PostAsJsonAsync(
             "/api/Projects",
             new CreateProjectDto { Name = "Should be blocked for Gast" });
@@ -130,7 +133,24 @@ public sealed class AuthRoutesTests : IAsyncLifetime
         Assert.True(hasSetCookie);
         Assert.Contains(setCookieHeaders!, cookie =>
             cookie.Contains("Identity.Application", StringComparison.Ordinal));
+        Assert.Equal(HttpStatusCode.OK, accountResponse.StatusCode);
+        Assert.Equal(registration.Email, account.GetProperty("email").GetString());
+        Assert.Contains(
+            UserRoles.Gast,
+            account.GetProperty("roles").EnumerateArray().Select(role => role.GetString()!));
         Assert.Equal(HttpStatusCode.Forbidden, protectedResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task Current_account_returns_unauthorized_without_login()
+    {
+        // Arrange
+
+        // Act
+        var response = await _client.GetAsync("/api/Auth/me");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
     [Fact]
