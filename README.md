@@ -1,22 +1,24 @@
-# Portfolio Backend API - WPFW Opdracht 3 
+# Portfolio Backend API - WPFW Opdracht 3
 
-Dit repository bevat de backend API voor de persoonlijke portfolio-website, ontwikkeld in het kader van de cursus Web Programming Frameworks (WPFW). 
+Dit repository bevat de backend API voor de persoonlijke portfolio-website, ontwikkeld in het kader van de cursus Web Programming Frameworks (WPFW).
 
 typ in terminal "dotnet run" om lokaal app te runnen
 
 ## 📌 Algemene Gegevens
-* **Student:** Guido van der Maas
-* **Repository:** [Portfoliosite-Backend](https://github.com/GGMaas/Portfoliosite-Backend)
-* **Kader:** WPFW Opdracht 3 - De Haagse Hogeschool
+
+- **Student:** Guido van der Maas
+- **Repository:** [Portfoliosite-Backend](https://github.com/GGMaas/Portfoliosite-Backend)
+- **Kader:** WPFW Opdracht 4 - De Haagse Hogeschool
 
 ---
 
 ## 🛠️ Technologieën & Versies
-* **.NET SDK:** .NET 10 (`net10.0`)
-* **Framework:** ASP.NET Core Web API
-* **ORM:** Entity Framework Core 10
-* **Database:** Microsoft SQL Server (LocalDB / Express)
-* **Authenticatie:** ASP.NET Core Identity Framework
+
+- **.NET SDK:** .NET 10 (`net10.0`)
+- **Framework:** ASP.NET Core Web API
+- **ORM:** Entity Framework Core 10
+- **Database:** Microsoft SQL Server (LocalDB / Express)
+- **Authenticatie:** ASP.NET Core Identity Framework
 
 ---
 
@@ -29,6 +31,7 @@ De applicatie is gebouwd volgens een **gelaagde architectuur** (Layered / N-Tier
 3. **Datalaag (`Data/` & `Entities/`):** Beheert de entiteiten (`Project`, `Blogpost`, `User`) en communiceert met SQL Server via `AppDbContext` (afgeleid van `IdentityDbContext`).
 
 ### Gekozen API-stijl
+
 Er is gekozen voor **Controller-based Web API's** (`[ApiController]`). Dit biedt een duidelijke scheiding per entiteit, maakt gebruik van ASP.NET Core Dependency Injection en is eenvoudig uit te breiden en te onderhouden.
 
 ---
@@ -36,6 +39,7 @@ Er is gekozen voor **Controller-based Web API's** (`[ApiController]`). Dit biedt
 ## 🗄️ SQL Server Configuratie & Database Aanmaken
 
 ### 1. Connection String instellen
+
 De connection string is geconfigureerd in `appsettings.json`. Pas indien nodig de servernaam aan naar jouw lokale SQL Server instantie:
 
 ```json
@@ -47,6 +51,7 @@ De connection string is geconfigureerd in `appsettings.json`. Pas indien nodig d
 ```
 
 ### 2. Database migreren
+
 Voer de bestaande EF Core-migraties uit voordat je de API start:
 
 ```powershell
@@ -89,3 +94,24 @@ Als een aparte frontend de cookie moet gebruiken, stel de exacte origin in (verv
 ```
 
 De frontend moet daarnaast cookies meesturen, bijvoorbeeld met `credentials: "include"`. Gebruik voor cookie-authenticatie geen wildcard-origin.
+
+## Tests
+
+`PortfolioSite.Tests` bevat HTTP-integratietests voor de CRUD-routes van projecten en blogposts. De tests gebruiken de echte controllers en services, maar een aparte in-memory database en testauthenticatie; de lokale SQL Server-database wordt niet aangepast. Elke test maakt Arrange, Act en Assert herkenbaar.
+
+De tests controleren voor beide resources:
+
+- Publiek ophalen van alle items en een bestaand item, plus `404 Not Found` voor een ontbrekend item.
+- Aanmaken als Editor en Admin, inclusief `201 Created` en de teruggegeven en opgeslagen gegevens.
+- Wijzigen en verwijderen van bestaande items (`204 No Content`), plus `404 Not Found` wanneer het item ontbreekt.
+- Alle schrijfmethoden geven `401 Unauthorized` zonder authenticatie en `403 Forbidden` voor de rol `Gast`.
+
+Na uitvoering rapporteert Coverlet 100% line- en branch-coverage voor beide CRUD-controllers en beide CRUD-services. De totale coverage van de backend is lager, omdat deze tests niet de authenticatie-, registratie- of opstartcode afdekken; de coverageclaim is dus specifiek voor de CRUD-functionaliteit.
+
+Voer de tests uit vanuit de backendmap:
+
+```powershell
+dotnet test .\PortfolioSite.Tests\PortfolioSite.Tests.csproj --configuration Release --collect:"XPlat Code Coverage"
+```
+
+Het Cobertura-rapport wordt onder `PortfolioSite.Tests\TestResults` opgeslagen.

@@ -74,7 +74,12 @@ static void AddApplicationServices(IServiceCollection services)
 // Enable user accounts, roles, authentication, and authorization policies.
 static void AddIdentityAndAuthorization(IServiceCollection services)
 {
-    services.AddIdentity<User, IdentityRole>()
+    services.AddIdentity<User, IdentityRole>(options =>
+    {
+        var path = options.Password;
+        path.RequireNonAlphanumeric = false;
+        path.RequireDigit = false;
+    })
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
@@ -161,4 +166,8 @@ static async Task EnsureRolesExistAsync(IServiceProvider services)
             throw new InvalidOperationException($"Could not create the '{roleName}' role: {errors}");
         }
     }
+}
+
+public partial class Program
+{
 }

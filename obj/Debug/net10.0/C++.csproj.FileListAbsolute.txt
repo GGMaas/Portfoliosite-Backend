@@ -358,3 +358,5 @@ C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.deps.json
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.runtimeconfig.json
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.dll
 C:\Users\maasv\AppData\Local\Temp\Portfoliosite-Backend-auth-check\C++.pdb
+C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\bin\Debug\net10.0\PortfolioSite.Tests\obj\PortfolioSite.Tests.csproj.nuget.dgspec.json
+C:\Users\maasv\OneDrive\Documenten\GitHub\Portfoliosite-Backend\bin\Debug\net10.0\PortfolioSite.Tests\obj\project.assets.json

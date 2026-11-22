@@ -1,2 +1,6 @@
 .env
 rest-client.env.json
+
+**/bin/
+**/obj/
+**/TestResults/
